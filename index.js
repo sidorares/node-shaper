@@ -14,6 +14,8 @@ var ShapeStream = function (byteRate, chunkRate, lowWatermark, highWatermark) {
     if (!highWatermark)
         highWatermark = 0;
    
+    this.lowWatermark = lowWatermark;
+    this.highWatermark = highWatermark;
     this.checkInterval = 1000/chunkRate;
     this.buffer = buffers();
     this.startTime = Date.now();
@@ -31,25 +33,25 @@ ShapeStream.prototype.expectedWritten = function() {
 ShapeStream.prototype.processBuffer = function() {
     var expected = this.expectedWritten();
     if (expected > this.totalWritten) {
-      var lengthToWrite = expected - this.totalWritten;
-      var chunk = this.buffer.splice(0, lengthToWrite);
-      this.doWrite(chunk.toBuffer());
+        var lengthToWrite = expected - this.totalWritten;
+        var chunk = this.buffer.splice(0, lengthToWrite);
+        this.doWrite(chunk.toBuffer());
     }
-    if (this.buffer.lengh <= this.lowWatermark && !this.stopping)
-        this.emit('drain');
+    if (this.buffer.length <= this.lowWatermark && !this.stopping)
+         this.emit('drain');
 
     if (this.buffer.length == 0) {
+        this.sendTimer = null;
         if (this.stopping)
-           this.emit('close');
+            this.emit('close');
     } else
         this.sendTimer = setTimeout(this.processBuffer.bind(this), this.checkInterval);
 }
 
-ShapeStream.prototype.doWrite = function(chunk)
-{
+ShapeStream.prototype.doWrite = function(chunk) {
     this.totalWritten += chunk.length;
-    this.emit('data', chunk);
-}
+    //this.emit('data', cihunk);
+};
 
 ShapeStream.prototype.write = function(chunk, encoding) {
     if (typeof chunk === 'string')
@@ -61,8 +63,9 @@ ShapeStream.prototype.write = function(chunk, encoding) {
         return true;
     }
     this.buffer.push(chunk);
-    if (!this.paused)
+    if (!this.paused && !this.sendTimer) // don't process buffer if it is already scheduled
         this.processBuffer();
+    
     return this.buffer.length < this.highWatermark;
 };
 
