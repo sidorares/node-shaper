@@ -12,6 +12,8 @@ Installation
 $ npm install shaper
 ```
 
+Examples
+--------
 
 'Slow cat' example:
 
