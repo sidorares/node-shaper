@@ -1,0 +1,32 @@
+{ "name" : "shaper"
+, "author": "Andrey Sidorov <sidorares@yandex.ru>"
+, "description": "Create throttled through stream"
+, "keywords": ["stream", "throttle", "shape", "shaper"]
+, "homepage": "https://github.com/sidorares/shaper"
+, "version" : "0.0.1"
+, "maintainers" :
+  [ { "name": "Andrey Sidorov"
+    , "email": "sidoares@yandex.ru"
+    }
+  ]
+, "bugs" : { "url" : "http://github.com/sidorares/node-shaper/issues" }
+, "license" : "MIT"
+, "repositories" :
+  [ { "type" : "git"
+    , "url" : "http://github.com/sidorares/node-shaper"
+    }
+  ]
+, "main" : "index.js"
+, "directories" : {
+        "example" : "example",
+        "test" : "test"
+   }
+, "engines" : { "node" : "*" }
+, "dependencies": {
+    "exec_stream": "*"
+  }
+, "scripts": {
+    "test": "mocha",
+    "prepublish" : "npm prune"
+  }
+}
