@@ -19,7 +19,7 @@ $ npm install throttle
     var shape = require('shaper');
     process.stdin.pipe(shape(10)).pipe(process.stdout, {end: false} );
     process.stdin.resume();
-```js
+```
 
 output:  
 
