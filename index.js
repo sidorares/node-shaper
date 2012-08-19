@@ -50,7 +50,7 @@ ShapeStream.prototype.processBuffer = function() {
 
 ShapeStream.prototype.doWrite = function(chunk) {
     this.totalWritten += chunk.length;
-    //this.emit('data', cihunk);
+    this.emit('data', chunk);
 };
 
 ShapeStream.prototype.write = function(chunk, encoding) {
