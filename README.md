@@ -34,9 +34,11 @@ output:
     sys	        0m0.012s
 ```
 
-parameters
+API
+---
  
-    shaper(byteRate, chunkRate, lowWatermark, highWatermark)
+    var shaper = require('shaper');
+    var shapeStream = shaper(byteRate, chunkRate, lowWatermark, highWatermark)
   
 `byteRate` - targeted speed in bytes per second
 
