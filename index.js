@@ -35,7 +35,7 @@ ShapeStream.prototype.processBuffer = function() {
       var chunk = this.buffer.splice(0, lengthToWrite);
       this.doWrite(chunk.toBuffer());
     }
-    if (buffer.lengh <= this.lowWatermark && !this.stopping)
+    if (this.buffer.lengh <= this.lowWatermark && !this.stopping)
         this.emit('drain');
 
     if (this.buffer.length == 0) {
