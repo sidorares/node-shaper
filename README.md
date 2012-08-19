@@ -34,12 +34,12 @@ output:
 
 parameters
  
-    shaper(byteRate, chunkRate, bufferLowWatermarkInSeconds, bufferHighWatermarkInSeconds)
+    shaper(byteRate, chunkRate, lowWatermark, highWatermark)
   
 `byteRate` - targeted speed in bytes per second
-`chunkRate` - output chunk rate. If target speed is 20000 bytes per second and chunk rate is 100, you'll have 100 chunks per second stream, each 200 bytes in size (on average). Note that if input stream is slower then target, chunks are sent immideately at input rate, wich could be higher than target chunk rate. If input is 1000 chunks per second, each 10 bytes `shape(20000, 500)` should give same 1000 chunk per second x 10 bytes stream.
-`bufferLowWatermarkInSeconds` - if estimated time to empty buffer is less than this parameter, stream emits `drain` event  
-`bufferHighWatermarkInSeconds` - if estimated time to full buffer is less than this parameter, stream `write` returns false.  
+`chunkRate` - (default is 10) - output chunk rate. If target speed is 20000 bytes per second and chunk rate is 100, you'll have 100 chunks per second stream, each 200 bytes in size (on average). Note that if input stream is slower then target, chunks are sent immideately at input rate, wich could be higher than target chunk rate. If input is 1000 chunks per second, each 10 bytes `shape(20000, 500)` should give same 1000 chunk per second x 10 bytes stream.
+`lowWatermark` - emit `drain` if buffer size length less than this paremeter. Default to 0.
+`highWatermark` - size buffer considered full. Default to 0.  
 
 
 [nt]: https://github.com/TooTallNate/node-throttle

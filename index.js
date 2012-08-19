@@ -5,10 +5,15 @@ var assert  = require('assert');
 
 
 // creates new shaped trough stream
-var ShapeStream = function (byteRate, chunkRate) {
+var ShapeStream = function (byteRate, chunkRate, lowWatermark, highWatermark) {
     this.rate = byteRate; // float number!
     if (!chunkRate)
         chunkRate = 10;
+    if (!lowWatermark)
+        lowWatermark = 0;
+    if (!highWatermark)
+        highWatermark = 0;
+   
     this.checkInterval = 1000/chunkRate;
     this.buffer = buffers();
     this.startTime = Date.now();
@@ -56,11 +61,12 @@ ShapeStream.prototype.processBuffer = function() {
       var chunk = this.buffer.splice(0, lengthToWrite);
       this.doWrite(chunk.toBuffer());
     }
+    if (buffer.lengh <= this.lowWatermark && !this.stopping)
+        this.emit('drain');
+
     if (this.buffer.length == 0) {
         if (this.stopping)
            this.emit('close');
-        else
-           this.emit('drain');
     } else
         this.sendTimer = setTimeout(this.processBuffer.bind(this), this.checkInterval);
 }
@@ -83,7 +89,7 @@ ShapeStream.prototype.write = function(chunk, encoding) {
     this.buffer.push(chunk);
     if (!this.paused)
         this.processBuffer();
-    return false;
+    return this.buffer.length < this.highWatermark;
 };
 
 ShapeStream.prototype.end = function(chunk, encoding) {
