@@ -24,32 +24,6 @@ var ShapeStream = function (byteRate, chunkRate, lowWatermark, highWatermark) {
 }
 util.inherits(ShapeStream, stream.Stream);
 
-// dont' need these, use inherited Stream.pipe
-/*
-ShapeStream.prototype.pipe = function (dest, opts) {
-    var self = this;
-
-    dest.on('drain', function() {
-       if (self.paused)
-          self.resume();
-    });
-
-    self.on('data', function(data) {
-        var buffered = !dest.write(data);
-        if (buffered)
-            self.pause();
-    });
-
-    if (!opts || (opts && opts.end === true) || (opts && typeof opts.end === 'undefined'))
-        self.on('end', function() {
-            dest.end();
-        });
-
-    self.emit('pipe');
-    return dest;
-};
-*/
-
 ShapeStream.prototype.expectedWritten = function() {
     return parseInt(this.rate*(Date.now() - this.startTime)/1000);
 }
