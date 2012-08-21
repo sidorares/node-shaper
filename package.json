@@ -3,7 +3,7 @@
 , "description": "Create throttled through stream"
 , "keywords": ["stream", "throttle", "shape", "shaper"]
 , "homepage": "https://github.com/sidorares/shaper"
-, "version" : "0.0.3"
+, "version" : "0.0.4"
 , "maintainers" :
   [ { "name": "Andrey Sidorov"
     , "email": "sidoares@yandex.ru"
