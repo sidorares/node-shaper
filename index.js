@@ -71,6 +71,7 @@ ShapeStream.prototype.write = function(chunk, encoding) {
 
 ShapeStream.prototype.end = function(chunk, encoding) {
     this.stopping = true;
+    this.writable = false;
     if (chunk)
         this.write(chunk, encoding);
     else
@@ -78,6 +79,8 @@ ShapeStream.prototype.end = function(chunk, encoding) {
 };
 
 ShapeStream.prototype.pause = function() {
+    if (this.sendTimer)
+       clearTimeout(this.sendTimer);
     this.pauseCount++;
     this.paused = true;
 };
