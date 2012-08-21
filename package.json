@@ -23,7 +23,11 @@
    }
 , "engines" : { "node" : "*" }
 , "dependencies": {
-    "exec_stream": "*"
+  }
+, "devDependencies": {
+      "mocha": "*",
+      "stream-spec": "*",
+      "stream-tester": "*"
   }
 , "scripts": {
     "test": "mocha",
