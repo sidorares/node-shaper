@@ -2,7 +2,7 @@
 , "author": "Andrey Sidorov <sidorares@yandex.ru>"
 , "description": "Create throttled through stream"
 , "keywords": ["stream", "throttle", "shape", "shaper"]
-, "homepage": "https://github.com/sidorares/shaper"
+, "homepage": "https://github.com/sidorares/node-shaper"
 , "version" : "0.0.4"
 , "maintainers" :
   [ { "name": "Andrey Sidorov"
