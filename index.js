@@ -34,8 +34,9 @@ ShapeStream.prototype.processBuffer = function() {
         this.sendTimer = null;
         if (this.stopping)
             this.emit('close');
-    } else
+    } else if (!this.paused) {
         this.sendTimer = setTimeout(this.processBuffer.bind(this), this.checkInterval);
+    }
 };
 
 ShapeStream.prototype.reshape = function(byteRate, chunkRate, lowWatermark, highWatermark) {
@@ -87,13 +88,11 @@ ShapeStream.prototype.end = function(chunk, encoding) {
 ShapeStream.prototype.pause = function() {
     if (this.sendTimer)
        clearTimeout(this.sendTimer);
-    this.pauseCount++;
     this.paused = true;
 };
 
 ShapeStream.prototype.resume = function() {
-    this.pauseCount--;
-    if (this.pauseCount === 0) {
+    if (this.paused) {
         this.paused = false;
         this.processBuffer();
     }
