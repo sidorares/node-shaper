@@ -1,6 +1,8 @@
 shaper
 ======
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/sidorares/node-shaper.svg)](https://greenkeeper.io/)
+
 ### Limit stream speed to bytes per second/chunk per second
 
 Inspired by [node-throttle][nt] module, but acts as a through stream and splits input chunks if required to maintain target speed as close as possible.
